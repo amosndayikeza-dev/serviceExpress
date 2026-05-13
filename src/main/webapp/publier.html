@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B35">
+    <title>Publier une annonce - Service Express</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Styles spécifiques à la page publication */
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-container h2 {
+            font-size: 1.8rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-info {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .form-group label .required {
+            color: var(--danger);
+            margin-left: 0.25rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: var(--transition);
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .form-group input.valid,
+        .form-group textarea.valid,
+        .form-group select.valid {
+            border-color: var(--success);
+        }
+
+        .form-group input.invalid,
+        .form-group textarea.invalid,
+        .form-group select.invalid {
+            border-color: var(--danger);
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .form-buttons button {
+            flex: 1;
+            padding: 0.875rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .form-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            display: block;
+        }
+
+        .form-message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            display: block;
+        }
+
+        .hero-section-small {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 1.5rem;
+            border-radius: 0 0 2rem 2rem;
+            margin-bottom: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-section-small h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .hero-section-small p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .form-container {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+            }
+
+            .form-container h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Menu hamburger -->
+<button class="menu-btn" id="menuBtn">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+<!-- Menu latéral -->
+<div class="side-menu" id="sideMenu">
+    <div class="menu-header">
+        <div class="menu-logo">
+            <span>🏪</span>
+        </div>
+        <h3>Service Express</h3>
+        <p>Burundi</p>
+    </div>
+
+    <div class="menu-items">
+        <a href="index.html" class="menu-item">
+            <span class="menu-item-icon">🏠</span>
+            <span class="menu-item-text">Accueil</span>
+        </a>
+        <a href="publier.html" class="menu-item active">
+            <span class="menu-item-icon">📝</span>
+            <span class="menu-item-text">Publier</span>
+        </a>
+        <a href="admin.html" class="menu-item">
+            <span class="menu-item-icon">🛡️</span>
+            <span class="menu-item-text">Admin</span>
+        </a>
+    </div>
+</div>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- Hero section simplifiée -->
+<div class="hero-section-small">
+    <h1>📝 Publier une annonce</h1>
+    <p>Publiez votre service gratuitement et trouvez de nouveaux clients</p>
+</div>
+
+<div class="container">
+    <div class="form-container">
+        <h2>
+            <span>✨</span>
+            Nouvelle annonce
+        </h2>
+        <p class="form-info">
+            <span style="color: var(--danger);">*</span> Tous les champs marqués d'un astérisque sont obligatoires
+        </p>
+
+        <form id="publishForm">
+            <div class="form-group">
+                <label for="serviceName">
+                    Nom du service <span class="required">*</span>
+                </label>
+                <input type="text" id="serviceName" name="serviceName"
+                       placeholder="Ex: Coupe homme, Réparation iPhone, Fabrication de meubles..."
+                       autocomplete="off">
+                <small>Minimum 3 caractères - Soyez précis pour être trouvé facilement</small>
+            </div>
+
+            <div class="form-group">
+                <label for="description">
+                    Description <span class="required">*</span>
+                </label>
+                <textarea id="description" name="description" rows="4"
+                          placeholder="Décrivez votre service : matériaux utilisés, compétences, délais, expérience, etc."></textarea>
+                <small>Minimum 10 caractères - Une bonne description attire plus de clients</small>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="price">Prix indicatif</label>
+                    <input type="number" id="price" name="price"
+                           placeholder="Ex: 5000" step="100" autocomplete="off">
+                    <small>En francs burundais (FBu) - Laissez vide si prix variable</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">
+                        Quartier / Lieu <span class="required">*</span>
+                    </label>
+                    <input type="text" id="location" name="location"
+                           placeholder="Ex: Musaga, Centre ville, Kamenge, Ngagara..."
+                           autocomplete="off">
+                    <small>Précisez votre quartier pour que les clients vous trouvent facilement</small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">
+                        Téléphone <span class="required">*</span>
+                    </label>
+                    <input type="tel" id="phone" name="phone"
+                           placeholder="Ex: 61234567" autocomplete="off">
+                    <small>Numéro WhatsApp ou appel - Les clients vous contacteront directement</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">
+                        Catégorie <span class="required">*</span>
+                    </label>
+                    <select id="category" name="category">
+                        <option value="">Sélectionnez une catégorie</option>
+                        <option value="Coiffure">💇 Coiffure</option>
+                        <option value="Réparation téléphone">📱 Réparation téléphone</option>
+                        <option value="Menuiserie">🪑 Menuiserie</option>
+                        <option value="Couture">👗 Couture</option>
+                        <option value="Plomberie">🔧 Plomberie</option>
+                        <option value="Électricité">⚡ Électricité</option>
+                        <option value="Mécanique">🚗 Mécanique</option>
+                        <option value="Informatique">💻 Informatique</option>
+                        <option value="Photographie">📷 Photographie</option>
+                        <option value="Autre">📌 Autre</option>
+                    </select>
+                    <small>Choisissez la catégorie la plus adaptée</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="artisanName">Votre nom (optionnel)</label>
+                <input type="text" id="artisanName" name="artisanName"
+                       placeholder="Ex: Jean, Madame Marie, Garage Central..." autocomplete="off">
+                <small>Laissez vide pour rester anonyme - Ajouter votre nom inspire confiance</small>
+            </div>
+
+            <div class="form-buttons">
+                <button type="button" class="btn btn-outline" onclick="window.location.href='index.html'">
+                    ← Annuler
+                </button>
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    📢 Publier l'annonce
+                </button>
+            </div>
+        </form>
+
+        <div id="formMessage" class="form-message"></div>
+    </div>
+</div>
+
+<!-- Bouton flottant retour -->
+<a href="index.html" class="fab-button" style="background: var(--secondary);">
+    <span>🏠</span>
+</a>
+
+<script src="js/publier.js"></script>
+</body>
+</html>
