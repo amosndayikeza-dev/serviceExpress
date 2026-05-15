@@ -6,52 +6,30 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    // Méthode pour lire les variables d'environnement
-    private static String getDbUrl() {
-        // Priorité aux variables d'environnement (Render)
-        String renderUrl = System.getenv("DB_URL");
-        if (renderUrl != null && !renderUrl.isEmpty()) {
-            System.out.println("Utilisation DB_URL de Render: " + renderUrl);
-            return renderUrl;
+    public static Connection getConnection() throws SQLException {
+        // Lire les variables d'environnement
+        String url = System.getenv("DB_URL");
+        String user = System.getenv("DB_USERNAME");
+        String password = System.getenv("DB_PASSWORD");
+
+        // Si variables non trouvées, utiliser valeurs par défaut (local)
+        if (url == null) {
+            url = "jdbc:mysql://localhost:3306/service_express?useSSL=false";
+            user = "root";
+            password = "";
+            System.out.println("⚠️ Utilisation base locale");
+        } else {
+            System.out.println("✅ Utilisation DB_URL: " + url);
         }
 
-        // Fallback pour le développement local
-        System.out.println("Utilisation base locale");
-        return "jdbc:mysql://localhost:3306/service_express?useSSL=false";
-    }
-
-    private static String getDbUsername() {
-        String renderUser = System.getenv("DB_USERNAME");
-        if (renderUser != null && !renderUser.isEmpty()) {
-            return renderUser;
-        }
-        return "root"; // Local default
-    }
-
-    private static String getDbPassword() {
-        String renderPass = System.getenv("DB_PASSWORD");
-        if (renderPass != null && !renderPass.isEmpty()) {
-            return renderPass;
-        }
-        return ""; // Local default
-    }
-
-    static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("✅ Driver MySQL chargé");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            System.err.println("❌ Driver non trouvé: " + e.getMessage());
         }
-    }
 
-    public static Connection getConnection() throws SQLException {
-        String url = getDbUrl();
-        String username = getDbUsername();
-        String password = getDbPassword();
-
-        System.out.println("Tentative de connexion à: " + url);
-        System.out.println("Utilisateur: " + username);
-
-        return DriverManager.getConnection(url, username, password);
+        System.out.println("🔌 Connexion à MySQL...");
+        return DriverManager.getConnection(url, user, password);
     }
 }
