@@ -1,6 +1,6 @@
-package com.serviceexpress.utils;
+package com.utils;
 
-import com.serviceexpress.model.Ad;
+import com.model.Ad;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

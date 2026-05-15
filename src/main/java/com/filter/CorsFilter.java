@@ -1,4 +1,4 @@
-package com.serviceexpress.filter;
+package com.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

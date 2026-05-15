@@ -1,10 +1,10 @@
-package com.serviceexpress.servlet;
+package com.servlet;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.serviceexpress.dao.AdDAO;
-import com.serviceexpress.model.Ad;
-import com.serviceexpress.utils.ValidationUtils;
+import com.dao.AdDAO;
+import com.model.Ad;
+import com.utils.ValidationUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

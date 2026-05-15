@@ -1,6 +1,6 @@
-package com.serviceexpress.dao;
+package com.dao;
 
-import com.serviceexpress.model.Ad;
+import com.model.Ad;
 import java.sql.*;
 import java.util.*;
 

@@ -1,6 +1,6 @@
-package com.serviceexpress.test;
+package com.test;
 
-import com.serviceexpress.dao.DatabaseConnection;
+import com.dao.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

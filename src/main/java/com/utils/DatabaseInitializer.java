@@ -1,6 +1,6 @@
-package com.serviceexpress.utils;
+package com.utils;
 
-import com.serviceexpress.dao.DatabaseConnection;
+import com.dao.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.Statement;
 

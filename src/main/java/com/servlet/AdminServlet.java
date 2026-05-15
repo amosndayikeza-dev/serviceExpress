@@ -1,9 +1,10 @@
-package com.serviceexpress.servlet;
+package com.servlet;
 
+import com.dao.DatabaseConnection;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.serviceexpress.dao.AdDAO;
-import com.serviceexpress.model.Ad;
+import com.dao.AdDAO;
+import com.model.Ad;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -281,7 +282,7 @@ public class AdminServlet extends HttpServlet {
             // Mise à jour dans la base de données
             String sql = "UPDATE ad SET service_name=?, description=?, price=?, location=?, phone=?, category=?, artisan_name=? WHERE id=?";
 
-            try (java.sql.Connection conn = com.serviceexpress.dao.DatabaseConnection.getConnection();
+            try (java.sql.Connection conn = DatabaseConnection.getConnection();
                  java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
                 pstmt.setString(1, ad.getServiceName());

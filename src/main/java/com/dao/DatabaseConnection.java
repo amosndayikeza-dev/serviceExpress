@@ -1,6 +1,5 @@
-package com.serviceexpress.dao;
+package com.dao;
 
-import com.serviceexpress.utils.DatabaseInitializer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

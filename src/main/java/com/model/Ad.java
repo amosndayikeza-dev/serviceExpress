@@ -1,4 +1,4 @@
-package com.serviceexpress.model;
+package com.model;
 
 import java.util.Date;
 
