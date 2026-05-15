@@ -1,5 +1,5 @@
 // ==================== CONFIGURATION ====================
-const API_BASE_URL = '/ServiceExpress/api';
+const API_BASE_URL = '/api';
 let currentAdminAds = [];
 
 // ==================== MENU HAMBURGER ====================
